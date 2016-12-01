@@ -11,7 +11,7 @@ make
 ```
 
 #Erreurs
-Lorsque des erreurs sont rencontrées gulp d'arrête afin que vous puissiez garder le contrôle sur le flux et corriger les erreurs.
+Lorsque des erreurs sont rencontrées gulp s'arrête afin que vous puissiez garder le contrôle sur le flux et corriger les erreurs.
 
 
 #Installation nodejs & npm
