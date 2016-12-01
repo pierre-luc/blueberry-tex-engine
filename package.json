@@ -1,0 +1,44 @@
+{
+  "name": "latex-template-engine",
+  "version": "1.0.2",
+  "description": "Moteur de template swig pour latex",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pierre-Luc",
+  "license": "ISC",
+  "devDependencies": {
+    "fs": "0.0.1-security",
+    "gulp-dest": "^0.2.3",
+    "gulp-folders": "^1.1.0",
+    "gulp-shell": "^0.5.1",
+    "gulp-swig": "^0.7.4",
+    "run-sequence": "^1.1.4"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-file-copy": "0.0.1",
+    "gulp-function": "^1.3.6",
+    "gulp-prompt": "^0.2.0",
+    "gulp-rename": "^1.2.2",
+    "path": "^0.12.7",
+    "q": "^1.4.1",
+    "yargs": "^6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pierre-luc/lwig.git"
+  },
+  "keywords": [
+    "template",
+    "engine",
+    "swig",
+    "latex",
+    "autocompile"
+  ],
+  "bugs": {
+    "url": "https://github.com/pierre-luc/lwig/issues"
+  },
+  "homepage": "https://github.com/pierre-luc/lwig#readme"
+}

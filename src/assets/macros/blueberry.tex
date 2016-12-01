@@ -1,0 +1,126 @@
+
+
+{% macro cellColor(cell) %}
+	{% if col.bgColor %}
+		{{ "\cellcolor{" + col.bgColor + "}" | raw }}
+	{% endif %}
+	{% if col.color %}
+		{ {{ "\textcolor{" + col.color + "}" | raw }}{{cell.value | raw}} }
+	{% else %}
+		{{cell.value | raw}}
+	{% endif %}
+{% endmacro %}
+
+{% macro cellValue( cell ) %}
+	{% if cell.align %}
+		{% set align = {left: 'l', center: 'c', right: 'r' }%}
+		\multicolumn{1}{|{{align[cell.align]}}|}{ {{cellColor(cell)}} }&
+	{% else %}
+		{{cellColor(cell)}}&
+	{% endif %}
+{% endmacro %}
+
+{% macro table( p )%}
+	{% set maxRow = 0 %}
+	{% for row in p -%}
+		{%- if row.type == 'header' -%}
+			{% if row.cells.length > maxRow.length %}
+				{% set maxRow = row.cells %}
+			{% endif %}
+		{% else -%}
+			{% if row.cells.length > maxRow.length %}
+				{% set maxRow = row %}
+			{% endif %}
+		{% endif %}
+	{%- endfor %}
+
+	\begin{tabular}[t]{ {% for row in maxRow -%}|c{%- endfor %}l|}
+		\hline
+		{% for row in p %}
+			{%- if row.type == 'header' -%}
+				\rowcolor{secondarycolor}
+				{% for col in row.cells -%}
+					{\textcolor{white} {{ col | raw  }}}&
+				{%- endfor %}\\
+				\hline
+			{% else -%}
+				{% for col in row -%}
+					{% if col.value %}
+						{{cellValue(col)}}
+					{% else %}
+						{{ col | raw  }}&
+					{% endif %}
+				{%- endfor %}\\
+			{% endif %}
+		{% endfor %}
+		\hline
+	\end{tabular}
+{% endmacro %}
+
+
+
+{% macro init( data ) %}
+
+\title{
+	{{data.title | raw }}
+}
+\author{
+	{%- for author in data.authors -%}
+		{{author | raw }}{%- if not loop.last %}, {% else -%}{% endif -%}
+		{%- if loop.index === 3 %}\\{% endif -%}
+	{%- endfor -%}
+}
+\authorFooter{
+	{%- for author in data.authors -%}
+		{{author | raw }}{%- if not loop.last %}, {% else -%}{% endif -%}
+	{%- endfor -%}
+}
+\projet{
+	{{data.project | raw }}
+}
+\projdesc{
+	{{data.pitch.firstLine | raw }}\newline
+	{{data.pitch.secondLine | raw }}
+}
+\pitch{
+	{{data.pitch | raw }}
+}
+\filiere{
+	{{data.spinneret | raw }}
+}
+\version{
+	{{data.version | raw }}
+}
+
+\schoolyear{
+	{{data.year | raw }}
+}
+\date{ {%- if data.date %} {{data.date}} {% else -%} \today {% endif -%} }
+
+
+{% endmacro %}
+
+
+{% macro history( data ) %}
+	\thispagestyle{empty}
+	{%- for hist in data -%}
+		\histentry{ {{hist.version}} }{ {{hist.date}} }{
+			\begin{itemize}
+				{%- for item in hist.items -%}
+					\item {{item | raw }}
+				{%- endfor -%}
+			\end{itemize}}
+	{%- endfor -%}
+{% endmacro %}
+
+
+{% macro begin %}
+\color{darkgray}
+\maketitle
+\newpage
+\clearpage
+\setcounter{page}{3}
+%La table des matières
+\tableofcontents
+\newpage
+{% endmacro %}
